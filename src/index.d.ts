@@ -9,7 +9,7 @@ import type { MarkedExtension } from "marked";
  * - Custom table header rendering
  * - Custom table row rendering
  */
-export default function extendedTable(): MarkedExtension;
+export default function markedExtendedTables(): MarkedExtension;
 
 /**
  * Extension options for the spanTable extension

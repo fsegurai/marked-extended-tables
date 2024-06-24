@@ -1,5 +1,5 @@
 import { marked } from "marked";
-import extendedTable from "../src/index.js";
+import markedExtendedTables from "../src/index.js";
 
 function trimLines(s: string): string {
   return s
@@ -14,7 +14,7 @@ describe("extended-table", () => {
   });
 
   test("Column Spanning", () => {
-    marked.use(extendedTable());
+    marked.use(markedExtendedTables());
     expect(
       marked(
         trimLines(`
@@ -27,7 +27,7 @@ describe("extended-table", () => {
   });
 
   test("Row Spanning", () => {
-    marked.use(extendedTable());
+    marked.use(markedExtendedTables());
     expect(
       marked(
         trimLines(`
@@ -42,7 +42,7 @@ describe("extended-table", () => {
   });
 
   test("Multi-row headers", () => {
-    marked.use(extendedTable());
+    marked.use(markedExtendedTables());
     expect(
       marked(
         trimLines(`

@@ -1,5 +1,5 @@
 import { marked } from 'marked';
-import extendedTable from '../src/index.js';
+import markedExtendedTables from '../src/index.js';
 
 function trimLines(s) {
   return s.split('\n').map(l => l.trim()).join('\n');
@@ -11,7 +11,7 @@ describe('extended-table', () => {
   });
 
   test('Column Spanning', () => {
-    marked.use(extendedTable());
+    marked.use(markedExtendedTables());
     expect(marked(trimLines(`
       | H1      | H2      | H3      |
       |---------|---------|---------|
@@ -20,7 +20,7 @@ describe('extended-table', () => {
   });
 
   test('Row Spanning', () => {
-    marked.use(extendedTable());
+    marked.use(markedExtendedTables());
     expect(marked(trimLines(`
       | H1           | H2      |
       |--------------|---------|
@@ -31,7 +31,7 @@ describe('extended-table', () => {
   });
 
   test('Multi-row headers', () => {
-    marked.use(extendedTable());
+    marked.use(markedExtendedTables());
     expect(marked(trimLines(`
       | This header spans two   || Header A |
       | columns *and* two rows ^|| Header B |
