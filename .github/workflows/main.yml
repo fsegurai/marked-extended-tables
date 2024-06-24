@@ -12,6 +12,12 @@ on:
         default: "no"
 
 jobs:
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
   Test:
     runs-on: ubuntu-latest
     strategy:
@@ -125,8 +131,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          registry-url: 'https://npm.pkg.github.com/'
-          scope: '@fsegurai'
+          registry-url: "https://npm.pkg.github.com/"
+          scope: "@fsegurai"
           always-auth: true
       - name: Install Dependencies
         run: npm ci
@@ -142,4 +148,3 @@ jobs:
         run: npm publish && npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
