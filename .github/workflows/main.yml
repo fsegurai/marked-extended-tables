@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      run_coverage:
+        description: "Run coverage (yes/no)"
+        required: false
+        default: "no"
 
 jobs:
   Test:
@@ -21,6 +27,7 @@ jobs:
         run: npm run test
 
   Coverage:
+    if: ${{ github.event.inputs.run_coverage == 'yes' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
