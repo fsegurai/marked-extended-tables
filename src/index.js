@@ -1,32 +1,32 @@
-export default function () {
+export default function() {
   return {
     extensions: [
       {
-        name: "spanTable",
-        level: "block",
+        name: 'spanTable',
+        level: 'block',
         start(src) {
           return src.match(/^\n *([^\n ].*\|.*)\n/)?.index;
         },
         tokenizer(src, tokens) {
           const regex = new RegExp(
-            "^ *([^\\n ].*\\|.*\\n(?: *[^\\s].*\\n)*?)" + // Header
-              " {0,3}(?:\\| *)?(:?-+:? *(?:\\| *:?-+:? *)*)(?:\\| *)?" + // Align
-              "(?:\\n((?:(?! *\\n| {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})" + // Cells
-              "(?:\\n+|$)| {0,3}#{1-6} | {0,3}>| {4}[^\\n]| {0,3}(?:`{3,}" +
-              "(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n| {0,3}(?:[*+-]|1[.)]) |" +
-              "<\\/?(?:address|article|aside|base|basefont|blockquote|body|" +
-              "caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?: +|\\n|\\/?>)|<(?:script|pre|style|textarea|!--)).*(?:\\n|$))*)\\n*|$)"
+            '^ *([^\\n ].*\\|.*\\n(?: *[^\\s].*\\n)*?)' // Header
+              + ' {0,3}(?:\\| *)?(:?-+:? *(?:\\| *:?-+:? *)*)(?:\\| *)?' // Align
+              + '(?:\\n((?:(?! *\\n| {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})' // Cells
+              + '(?:\\n+|$)| {0,3}#{1-6} | {0,3}>| {4}[^\\n]| {0,3}(?:`{3,}'
+              + '(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n| {0,3}(?:[*+-]|1[.)]) |'
+              + '<\\/?(?:address|article|aside|base|basefont|blockquote|body|'
+              + 'caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul)(?: +|\\n|\\/?>)|<(?:script|pre|style|textarea|!--)).*(?:\\n|$))*)\\n*|$)'
           );
 
           const cap = regex.exec(src);
 
           if (cap) {
             const item = {
-              type: "spanTable",
-              header: cap[1].replace(/\n$/, "").split("\n"),
-              align: cap[2].replace(/^ *|\| *$/g, "").split(/ *\| */),
-              rows: cap[3] ? cap[3].replace(/\n$/, "").split("\n") : [],
-              raw: cap[0],
+              type: 'spanTable',
+              header: cap[1].replace(/\n$/, '').split('\n'),
+              align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
+              rows: cap[3] ? cap[3].replace(/\n$/, '').split('\n') : [],
+              raw: cap[0]
             };
 
             item.header[0] = splitCells(item.header[0]);
@@ -39,9 +39,9 @@ export default function () {
             if (colCount === item.align.length) {
               // Process alignments
               item.align = item.align.map((align) => {
-                if (/^ *-+: *$/.test(align)) return "right";
-                if (/^ *:-+: *$/.test(align)) return "center";
-                if (/^ *:-+ *$/.test(align)) return "left";
+                if (/^ *-+: *$/.test(align)) return 'right';
+                if (/^ *:-+: *$/.test(align)) return 'center';
+                if (/^ *:-+ *$/.test(align)) return 'left';
                 return null;
               });
 
@@ -84,56 +84,56 @@ export default function () {
           }
         },
         renderer(token) {
-          let output = "<table>";
-          output += "<thead>";
+          let output = '<table>';
+          output += '<thead>';
           token.header.forEach((row) => {
-            output += "<tr>";
+            output += '<tr>';
             let col = 0;
             row.forEach((cell) => {
               const text = this.parser.parseInline(cell.tokens);
-              output += getTableCell(text, cell, "th", token.align[col]);
+              output += getTableCell(text, cell, 'th', token.align[col]);
               col += cell.colspan;
             });
-            output += "</tr>";
+            output += '</tr>';
           });
-          output += "</thead>";
+          output += '</thead>';
           if (token.rows.length) {
-            output += "<tbody>";
+            output += '<tbody>';
             token.rows.forEach((row) => {
-              output += "<tr>";
+              output += '<tr>';
               let col = 0;
               row.forEach((cell) => {
                 const text = this.parser.parseInline(cell.tokens);
-                output += getTableCell(text, cell, "td", token.align[col]);
+                output += getTableCell(text, cell, 'td', token.align[col]);
                 col += cell.colspan;
               });
-              output += "</tr>";
+              output += '</tr>';
             });
-            output += "</tbody>";
+            output += '</tbody>';
           }
-          output += "</table>";
+          output += '</table>';
           return output;
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 }
 
 const getTableCell = (text, cell, type, align) => {
   if (!cell.rowspan) {
-    return "";
+    return '';
   }
   return (
-    `<${type}` +
-    `${cell.colspan > 1 ? ` colspan="${cell.colspan}"` : ""}` +
-    `${cell.rowspan > 1 ? ` rowspan="${cell.rowspan}"` : ""}` +
-    `${align ? ` align="${align}"` : ""}>${text}</${type}>\n`
+    `<${type}`
+    + `${cell.colspan > 1 ? ` colspan="${cell.colspan}"` : ''}`
+    + `${cell.rowspan > 1 ? ` rowspan="${cell.rowspan}"` : ''}`
+    + `${align ? ` align="${align}"` : ''}>${text}</${type}>\n`
   );
 };
 
 const splitCells = (tableRow, count, prevRow = []) => {
   const cells = [...tableRow.matchAll(/(?:[^|\\]|\\.?)+(?:\|+|$)/g)].map((x) =>
-    x[0].split(/\|+$/)[0].trim().replace(/\\\|/g, "|")
+    x[0].split(/\|+$/)[0].trim().replace(/\\\|/g, '|')
   );
 
   if (!cells[0]?.trim()) cells.shift();
@@ -145,10 +145,10 @@ const splitCells = (tableRow, count, prevRow = []) => {
     cells[i] = {
       rowspan: 1,
       colspan: Math.max(cell.length - cell.trim().length, 1),
-      text: cell,
+      text: cell
     };
 
-    if (cell.slice(-1) === "^" && prevRow.length) {
+    if (cell.slice(-1) === '^' && prevRow.length) {
       let prevCols = 0;
       for (let j = 0; j < prevRow.length; j++) {
         const prevCell = prevRow[j];
@@ -170,7 +170,7 @@ const splitCells = (tableRow, count, prevRow = []) => {
     cells.splice(count);
   } else {
     while (numCols < count) {
-      cells.push({ colspan: 1, text: "" });
+      cells.push({ colspan: 1, text: '' });
       numCols += 1;
     }
   }
