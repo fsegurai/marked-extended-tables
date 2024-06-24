@@ -10,7 +10,7 @@ Extends the standard [Github-Flavored tables](https://github.github.com/gfm/#tab
 
 ```js
 import { marked } from "marked";
-import { extendedTable } from "@fsegurai/marked-extended-tables";
+import extendedTable from "@fsegurai/marked-extended-tables";
 
 // or UMD script
 // <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
