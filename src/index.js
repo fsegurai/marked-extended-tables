@@ -87,6 +87,10 @@ const getTableCell = (text, cell, type, align) => {
 };
 
 const splitCells = (tableRow, count, prevRow = []) => {
+  if (!Array.isArray(prevRow)) {
+    prevRow = [];
+  }
+
   const cells = [...tableRow.matchAll(/(?:[^|\\]|\\.?)+(?:\|+|$)/g)].map(x => x[0].split(/\|+$/)[0].trim().replace(/\\\|/g, '|')).filter(Boolean);
 
   let numCols = 0;
