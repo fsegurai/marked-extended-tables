@@ -11,13 +11,11 @@ on:
         required: false
         default: "no"
 
-jobs:
-  push:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
+permissions:
+  packages: write
+  contents: read
 
+jobs:
   Test:
     runs-on: ubuntu-latest
     strategy:
