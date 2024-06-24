@@ -10,20 +10,36 @@ Extends the standard [Github-Flavored tables](https://github.github.com/gfm/#tab
 
 ```js
 import { marked } from "marked";
-import { gfmHeadingId } from "marked-gfm-heading-id";
+import { extendedTable } from "@fsegurai/marked-extended-tables";
 
 // or UMD script
 // <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
-// <script src="https://cdn.jsdelivr.net/npm/marked-gfm-heading-id/lib/index.umd.js"></script>
+// <script src="https://cdn.jsdelivr.net/npm/marked-extended-tables/lib/index.umd.js"></script>
 
-const options = {
-	prefix: "my-prefix-",
-};
+marked.use(extendedTable());
 
-marked.use(gfmHeadingId(options));
+marked(`
+      | H1      | H2      | H3      |
+      |---------|---------|---------|
+      | This cell spans 3 columns |||
+    `);
 
-marked("# heading");
-// <h1 id="my-prefix-heading">heading</h1>
+/**
+ * <table>
+ *  <thead>
+ *    <tr>
+ *      <th>H1</th>
+ *      <th>H2</th>
+ *      <th>H3</th>
+ *    </tr>
+ *  </thead>
+ *  <tbody>
+ *  <tr>
+ *    <td colspan="3">This cell spans 3 columns</td>
+ *  </tr>
+ *  </tbody>
+ * </table>
+ */
 ```
 
 ## Column Spanning
