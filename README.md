@@ -1,6 +1,10 @@
-# marked-gfm-heading-id
+# marked-extended-tables
 
-Add ids to headings like GitHub.
+Extends the standard [Github-Flavored tables](https://github.github.com/gfm/#tables-extension-) to support advanced features:
+
+  - Column Spanning
+  - Row Spanning
+  - Multi-row headers
 
 # Usage
 
@@ -22,48 +26,34 @@ marked("# heading");
 // <h1 id="my-prefix-heading">heading</h1>
 ```
 
-## Get heading list
+## Column Spanning
+Easily denote cells that should span multiple columns by grouping multiple pipe `|` characters at the end of the cell:
 
-`getHeadingList` is a function that is exported to provide the list of headings.
-
-The headings will each be an object with the following properties:
- - `text`: The rendered HTML for the heading
- - `level`: The heading level (1-7)
- - `id`: The id given to the heading including any prefix
-
-```js
-import { marked } from "marked";
-import { gfmHeadingId, getHeadingList } from "marked-gfm-heading-id";
-
-marked.use(gfmHeadingId({prefix: "my-prefix-"}), {
-	hooks: {
-		postprocess(html) {
-			const headings = getHeadingList();
-
-			return `
-<ul id="table-of-contents">
-	${headings.map(({id, text, level}) => `<li><a href="#${id}" class="h${level}">${text}</a></li>`)}
-</ul>
-${html}`;
-		}
-	}
-});
-
-marked("# heading");
-// <ul id="table-of-contents">
-//   <li><a href="#my-prefix-heading" class="h1">heading</a></li>
-// </ul>
-// <h1 id="my-prefix-heading">heading</h1>
+```
+| H1      | H2      | H3      |
+|---------|---------|---------|
+| This cell spans 3 columns |||
 ```
 
-## Clear Heading List
+## Row Spanning
+Easily denote cells that should span across the previous row by inserting a caret `^` character immediately before the closing pipes:
 
-`resetHeadings` is a function to purge the stored list of headings and reset the Slugger. This is only needed when the globalSlugs option ( see below) is set to true and you wish to reset the slugger and exportable Headers list.
+```
+| H1           | H2      |
+|--------------|---------|
+| This cell    | Cell A  |
+| spans three ^| Cell B  |
+| rows        ^| Cell C  |
+```
 
-## `options`
+Cell contents across rows will be concatenated together with a single whitespace character ` `. Note that cells can only span multiple rows if they have the same column span.
 
-| option      |  type  | default | description                                   |
-|-------------|--------|---------|:----------------------------------------------|
-| prefix      | string |  `""`   | A string to prepend to all ids.               |
-| globalSlugs | bool   | `false`   | Track ids from one use of marked to the next. This ensures unique headers when parsing multiple markdown fragments and rendering the results as a single document. When set to false, the slugger and headers lists are cleared on every marked run.
+## Multi-row headers
+Headers can now follow the same structure as cells, to include multiple rows, and also support row and column spans.
 
+```
+| This header spans two   || Header A |
+| columns *and* two rows ^|| Header B |
+|-------------|------------|----------|
+| Cell A      | Cell B     | Cell C   |
+```

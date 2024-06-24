@@ -1,5 +1,14 @@
 import type { MarkedExtension } from "marked";
 
+/**
+ * Adds support for extended tables in marked.
+ * This extension adds support for the following features:
+ * - Spanning rows and columns
+ * - Alignment of columns
+ * - Custom table cell rendering
+ * - Custom table header rendering
+ * - Custom table row rendering
+ */
 export default function extendedTable(): MarkedExtension;
 
 /**
