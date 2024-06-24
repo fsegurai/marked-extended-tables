@@ -84,7 +84,7 @@ jobs:
         run: npm run test:types
 
   Release:
-    needs: [Test, Coverage, Lint, Build, TestTypes]
+    needs: [Test, Lint, Build, TestTypes]
     if: |
       github.ref == 'refs/heads/main' &&
       github.event.repository.fork == false
