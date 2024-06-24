@@ -5,6 +5,8 @@ exports[`extended-table Column Spanning 1`] = `
 <th>H2</th>
 <th>H3</th>
 </tr></thead><tbody><tr><td>This cell spans 3 columns</td>
+<td></td>
+<td></td>
 </tr></tbody></table>"
 `;
 
@@ -30,9 +32,10 @@ exports[`extended-table Multi-row headers 1`] = `
 exports[`extended-table Row Spanning 1`] = `
 "<table><thead><tr><th>H1</th>
 <th>H2</th>
-</tr></thead><tbody><tr><td rowspan="3">This cell spans three  rows        </td>
+</tr></thead><tbody><tr><td rowspan="2">This cell</td>
 <td>Cell A</td>
-</tr><tr><td>Cell B</td>
+</tr><tr><td>spans three</td>
+<td>Cell B</td>
 </tr><tr><td>Cell C</td>
 </tr></tbody></table>"
 `;

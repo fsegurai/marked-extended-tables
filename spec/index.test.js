@@ -18,10 +18,10 @@ describe('extended-table', () => {
     expect(
       marked(
         trimLines(`
-      | H1      | H2      | H3      |
-      |---------|---------|---------|
-      | This cell spans 3 columns |||
-    `)
+          | H1           | H2      | H3      |
+          |--------------|---------|---------|
+          | This cell spans 3 columns        |
+        `)
       )
     ).toMatchSnapshot();
   });
@@ -31,12 +31,12 @@ describe('extended-table', () => {
     expect(
       marked(
         trimLines(`
-      | H1           | H2      |
-      |--------------|---------|
-      | This cell    | Cell A  |
-      | spans three ^| Cell B  |
-      | rows        ^| Cell C  |
-    `)
+          | H1           | H2      |
+          |--------------|---------|
+          | This cell    | Cell A  |
+          | spans three ^| Cell B  |
+          | rows        ^| Cell C  |
+        `)
       )
     ).toMatchSnapshot();
   });
