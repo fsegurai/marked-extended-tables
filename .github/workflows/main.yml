@@ -101,7 +101,7 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           registry-url: "https://npm.pkg.github.com/"
-          scope: "@fsegurai"
+          scope: ${{ vars.NPM_ORG }}
           always-auth: true
       - name: Install Dependencies
         run: npm ci
