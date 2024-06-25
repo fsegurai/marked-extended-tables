@@ -1,4 +1,4 @@
-# marked-extended-tables
+# @fsegurai/marked-extended-tables
 
 Extends the standard [Github-Flavored tables](https://github.github.com/gfm/#tables-extension-) to support advanced features:
 
