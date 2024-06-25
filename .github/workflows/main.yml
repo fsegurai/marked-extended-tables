@@ -18,18 +18,13 @@ permissions:
 jobs:
   Test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ${{ vars.NODE_VERSION }}
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ vars.NODE_VERSION }}
       - name: Install Dependencies
         run: npm ci
       - name: Run Tests 👩🏽‍💻
@@ -38,18 +33,13 @@ jobs:
   Coverage:
     if: ${{ github.event.inputs.run_coverage == 'yes' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ${{ vars.NODE_VERSION }}
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ vars.NODE_VERSION }}
       - name: Install Dependencies
         run: npm ci
       - name: Run Tests 👩🏽‍💻
@@ -57,18 +47,13 @@ jobs:
 
   Lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ${{ vars.NODE_VERSION }}
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ vars.NODE_VERSION }}
       - name: Install Dependencies
         run: npm ci
       - name: Lint ✨
@@ -76,17 +61,13 @@ jobs:
 
   Build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ${{ vars.NODE_VERSION }}
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ vars.NODE_VERSION }}
       - name: Install Dependencies
         run: npm ci
       - name: Build 🗜️
@@ -94,18 +75,13 @@ jobs:
 
   TestTypes:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ${{ vars.NODE_VERSION }}
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
         uses: dcodeIO/setup-node-nvm@master
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ vars.NODE_VERSION }}
       - name: Install Dependencies
         run: npm ci
       - name: Run Tests 👩🏽‍💻
@@ -117,18 +93,13 @@ jobs:
       github.ref == 'refs/heads/main' &&
       github.event.repository.fork == false
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ${{ vars.NODE_VERSION }}
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ vars.NODE_VERSION }}
           registry-url: "https://npm.pkg.github.com/"
           scope: "@fsegurai"
           always-auth: true
